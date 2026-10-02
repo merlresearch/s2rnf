@@ -1,0 +1,38 @@
+# Copyright (C) 2026 Mitsubishi Electric Research Laboratories (MERL)
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+[project]
+name = "sim-to-real-neural-field"
+version = "0.1.0"
+description = "HRTF Personalization via Sim-to-Real Neural Field"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "cmake==3.31.2",
+    "einops==0.8.1",
+    "librosa==0.10.2.post1",
+    "lightning==2.4.0",
+    "numpy==1.26.4",
+    "omegaconf==2.3.0",
+    "pandas==2.2.3",
+    "pysofaconventions==0.1.5",
+    "python-sofa==0.2.0",
+    "resampy==0.4.3",
+    "rich==13.9.4",
+    "scipy==1.14.1",
+    "tensorboard==2.18.0",
+    "torch==2.2.2",
+    "tqdm==4.67.1",
+    "wget==3.2",
+]
+
+[tool.uv.sources]
+torch = [
+    { index = "torch-cu121" },
+]
+
+[[tool.uv.index]]
+name = "torch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true

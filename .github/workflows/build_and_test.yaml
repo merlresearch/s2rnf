@@ -1,0 +1,43 @@
+# Copyright (C) 2026 Mitsubishi Electric Research Laboratories (MERL)
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+name: Build and Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Sync environment from uv.lock
+        run: uv sync --frozen
+
+      - name: Install dependencies
+        run: uv pip install "git+https://github.com/Katarina-Poole/Spatial-Audio-Metrics.git@fc63fa0" --no-deps
+
+      - name: Install dependencies for development
+        run: uv pip install -r requirements-dev.txt
+
+      - name: Run unit tests
+        run: |
+          uv run --no-sync pytest tests

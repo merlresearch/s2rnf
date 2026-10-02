@@ -1,0 +1,88 @@
+# Copyright (C) 2026 Mitsubishi Electric Research Laboratories (MERL)
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+model:
+  name: IGONSim2RealField
+  config:
+    hidden_features: 512
+    hidden_layers: 4
+    out_features: 258
+    scale: 1.0
+    dropout: 0.1
+    num_datasets: 2
+    activation: SiLU
+    peft: bitfit
+    subject_specific:
+    - 0
+    dataset_specific:
+    - 1
+    - 2
+    - 3
+    norm: LayerNorm
+learning:
+  num_workers: 4
+  batch_size: 12
+  patience: 1500
+  clip: 1.0
+  num_epoch: 1500
+  optimizer:
+    name: RAdam
+    config:
+      lr: 0.0005
+      betas:
+      - 0.9
+      - 0.999
+      weight_decay: 1.0e-06
+      decoupled_weight_decay: true
+loss:
+  nfft: 256
+  sr: 48000
+  floor: -60
+  real_weight: 1.0
+  simu_weight: 1.0
+dataset:
+  dataset_name: preprocessed_sonicom_v2
+  npz_path: ./scratch
+  valid_subjects:
+  - 154
+  - 222
+  - 40
+  - 244
+  - 176
+  - 285
+  - 41
+  - 208
+  - 257
+  - 218
+  - 38
+  - 130
+  - 106
+  - 103
+  - 155
+  test_subjects:
+  - 219
+  - 320
+  - 92
+  - 101
+  - 34
+  - 243
+  - 105
+  - 309
+  - 280
+  - 315
+  - 48
+  - 71
+  - 206
+  - 113
+  - 88
+  - 112
+  - 45
+  - 28
+  - 14
+  - 142
+  - 82
+  - 319
+  - 157
+  - 58
+  - 266
